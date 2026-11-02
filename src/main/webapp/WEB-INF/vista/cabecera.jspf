@@ -1,0 +1,44 @@
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%-- Cabecera común: se incluye al principio de cada vista con <%@ include file="cabecera.jspf" %> --%>
+<fmt:setLocale value="es_AR"/>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${titulo} · StockControl</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
+</head>
+<body>
+<header class="barra">
+    <a class="marca" href="Inicio">📦 StockControl</a>
+    <nav>
+        <a href="Inicio">Panel</a>
+        <a href="ListarProductos">Productos</a>
+        <a href="RegistrarMovimiento">Registrar movimiento</a>
+        <a href="ListarMovimientos">Movimientos</a>
+        <a href="Alertas">Alertas</a>
+        <c:if test="${sessionScope.usuario.admin}">
+            <a href="ListarCategorias">Categorías</a>
+            <a href="ListarProveedores">Proveedores</a>
+            <a href="Reportes">Reportes</a>
+            <a href="ListarUsuarios">Usuarios</a>
+        </c:if>
+    </nav>
+    <div class="sesion">
+        <c:out value="${sessionScope.usuario.nombre}"/>
+        <span class="rol">${sessionScope.usuario.rol}</span>
+        <a href="Logout">Salir</a>
+    </div>
+</header>
+<main>
+<c:if test="${not empty sessionScope.mensaje}">
+    <p class="aviso ok"><c:out value="${sessionScope.mensaje}"/></p>
+    <c:remove var="mensaje" scope="session"/>
+</c:if>
+<c:if test="${not empty error}">
+    <p class="aviso error"><c:out value="${error}"/></p>
+</c:if>
